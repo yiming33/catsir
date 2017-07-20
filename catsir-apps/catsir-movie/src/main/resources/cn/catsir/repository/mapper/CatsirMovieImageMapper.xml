@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.catsir.repository.CatsirMovieImageRepository">
+    <resultMap id="BaseResultMap" type="cn.catsir.entity.CatsirMovieImage">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="path" property="path" jdbcType="VARCHAR"/>
+        <result column="size" property="size" jdbcType="INTEGER"/>
+        <result column="movie_id" property="movieId" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, path, size, movie_id, create_date
+  </sql>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from catsir_movie_image
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from catsir_movie_image
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.String">
+    delete from catsir_movie_image
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="save" parameterType="cn.catsir.entity.CatsirMovieImage">
+    insert into catsir_movie_image (id, name, path, 
+      size, movie_id, create_date
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, 
+      #{size,jdbcType=INTEGER}, #{movieId,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="cn.catsir.entity.CatsirMovieImage">
+        insert into catsir_movie_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="size != null">
+                size,
+            </if>
+            <if test="movieId != null">
+                movie_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="size != null">
+                #{size,jdbcType=INTEGER},
+            </if>
+            <if test="movieId != null">
+                #{movieId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByIdSelective" parameterType="cn.catsir.entity.CatsirMovieImage">
+        update catsir_movie_image
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="size != null">
+                size = #{size,jdbcType=INTEGER},
+            </if>
+            <if test="movieId != null">
+                movie_id = #{movieId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateById" parameterType="cn.catsir.entity.CatsirMovieImage">
+    update catsir_movie_image
+    set name = #{name,jdbcType=VARCHAR},
+      path = #{path,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER},
+      movie_id = #{movieId,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

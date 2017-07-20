@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.catsir.repository.CatsirMovieRepository">
+    <resultMap id="BaseResultMap" type="cn.catsir.entity.CatsirMovie">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="translate_name" property="translateName" jdbcType="VARCHAR"/>
+        <result column="release_date" property="releaseDate" jdbcType="DATE"/>
+        <result column="time" property="time" jdbcType="INTEGER"/>
+        <result column="brief_info" property="briefInfo" jdbcType="LONGVARCHAR"/>
+        <result column="score" property="score" jdbcType="LONGVARCHAR"/>
+        <result column="language" property="language" jdbcType="VARCHAR"/>
+        <result column="region" property="region" jdbcType="VARCHAR"/>
+        <result column="director" property="director" jdbcType="VARCHAR"/>
+        <result column="star" property="star" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="last_update_date" property="lastUpdateDate" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, translate_name, release_date, time, language, region, director, star, create_date,
+        last_update_date, brief_info, score
+    </sql>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from catsir_movie
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from catsir_movie
+    </select>
+
+    <select id="findMovies" resultType="cn.catsir.model.CatsirMovieModel">
+        select
+        id,translate_name as translateName, release_date as releaseDate
+        from catsir_movie
+    </select>
+
+
+
+    <delete id="deleteById" parameterType="string">
+        delete from catsir_movie where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="save" parameterType="cn.catsir.entity.CatsirMovie">
+        insert into catsir_movie (id, name, translate_name,
+        release_date, time, language,
+        region, director, star,
+        create_date, last_update_date, brief_info,
+        score)
+        values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{translateName,jdbcType=VARCHAR},
+        #{releaseDate,jdbcType=DATE}, #{time,jdbcType=INTEGER}, #{language,jdbcType=VARCHAR},
+        #{region,jdbcType=VARCHAR}, #{director,jdbcType=VARCHAR}, #{star,jdbcType=VARCHAR},
+        #{createDate,jdbcType=DATE}, #{lastUpdateDate,jdbcType=DATE}, #{briefInfo,jdbcType=LONGVARCHAR},
+        #{score,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="cn.catsir.entity.CatsirMovie">
+        insert into catsir_movie
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="translateName != null">
+                translate_name,
+            </if>
+            <if test="releaseDate != null">
+                release_date,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="language != null">
+                language,
+            </if>
+            <if test="region != null">
+                region,
+            </if>
+            <if test="director != null">
+                director,
+            </if>
+            <if test="star != null">
+                star,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="lastUpdateDate != null">
+                last_update_date,
+            </if>
+            <if test="briefInfo != null">
+                brief_info,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="translateName != null">
+                #{translateName,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseDate != null">
+                #{releaseDate,jdbcType=DATE},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=INTEGER},
+            </if>
+            <if test="language != null">
+                #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="director != null">
+                #{director,jdbcType=VARCHAR},
+            </if>
+            <if test="star != null">
+                #{star,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="lastUpdateDate != null">
+                #{lastUpdateDate,jdbcType=DATE},
+            </if>
+            <if test="briefInfo != null">
+                #{briefInfo,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByIdSelective" parameterType="cn.catsir.entity.CatsirMovie">
+        update catsir_movie
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="translateName != null">
+                translate_name = #{translateName,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseDate != null">
+                release_date = #{releaseDate,jdbcType=DATE},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=INTEGER},
+            </if>
+            <if test="language != null">
+                language = #{language,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="director != null">
+                director = #{director,jdbcType=VARCHAR},
+            </if>
+            <if test="star != null">
+                star = #{star,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="lastUpdateDate != null">
+                last_update_date = #{lastUpdateDate,jdbcType=DATE},
+            </if>
+            <if test="briefInfo != null">
+                brief_info = #{briefInfo,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateById" parameterType="cn.catsir.entity.CatsirMovie">
+        update catsir_movie
+        set name = #{name,jdbcType=VARCHAR},
+        translate_name = #{translateName,jdbcType=VARCHAR},
+        release_date = #{releaseDate,jdbcType=DATE},
+        time = #{time,jdbcType=INTEGER},
+        language = #{language,jdbcType=VARCHAR},
+        region = #{region,jdbcType=VARCHAR},
+        director = #{director,jdbcType=VARCHAR},
+        star = #{star,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=DATE},
+        last_update_date = #{lastUpdateDate,jdbcType=DATE},
+        brief_info = #{briefInfo,jdbcType=LONGVARCHAR},
+        score = #{score,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>
